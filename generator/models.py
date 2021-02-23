@@ -7,6 +7,8 @@ class QuoteBox(models.Model):
     quote_citation = models.CharField(max_length=200)
     background_color = models.CharField(max_length=6)
     text_color = models.CharField(max_length=6)
+    width = models.PositiveSmallIntegerField()
+    height = models.PositiveSmallIntegerField()
 
     def __str__(self):
         return "A quote by " + self.quote_citation
