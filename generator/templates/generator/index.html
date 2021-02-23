@@ -1,0 +1,12 @@
+{% if message %}
+    <ul>
+     {{ message }}
+    </ul>
+{% else %}
+    <p>No message available.</p>
+{% endif %}
+{% if quoteBox == None %}
+    <p>An error occured, or no quote box exists with that id</p>
+{% else %}
+    <p>{{ quoteBox.quote_text }}</p>
+{% endif %}
