@@ -11,4 +11,4 @@ class QuoteBox(models.Model):
     height = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return "A quote by " + self.quote_citation
+        return "\"" + self.quote_text + "\"" + " - " + self.quote_citation
