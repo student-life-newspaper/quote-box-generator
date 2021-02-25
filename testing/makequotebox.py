@@ -1,10 +1,10 @@
 import os, sys
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
-imageWidth = 580
+imageWidth = 630
 imageHeight = 350
 
-infile = 'Grad-WashU.jpg'
+# infile = 'Grad-WashU.jpg'
 
 im = Image.new("RGB", (imageWidth,imageHeight), color=(227, 7, 14))
 
@@ -20,5 +20,8 @@ draw.rectangle([barMargin, barMargin, barMargin + barWeight, barVerticalLength],
 
 draw.rectangle([imageWidth - barMargin - barHorizontalLength, imageHeight - barMargin - barWeight, imageWidth - barMargin, imageHeight - barMargin], fill=(255,255,255))
 draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=(255,255,255))
+
+font = ImageFont.truetype("fonts/Georgia.ttf", size=80)
+draw.multiline_text((2* barMargin, 2* barMargin), "This is a test. Hi Emma.",font=font)
 
 im.save("output/test.png", "PNG")
