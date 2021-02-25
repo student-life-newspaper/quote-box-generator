@@ -1,15 +1,39 @@
 import os, sys
 from PIL import Image, ImageDraw, ImageFont
 
-imageWidth = 630
-imageHeight = 350
+# text_wrap adapted from https://github.com/Eyongkevin/How-to-Wrap-Text-on-Image-using-Python/
+def text_wrap(text, font, max_width):
+    lines = []
+    
+    # If the text width is smaller than the image width, then no need to split
+    # just add it to the line list and return
+    if font.getsize(text)[0]  <= max_width:
+        lines.append(text)
+    else:
+        #split the line by spaces to get words
+        words = text.split(' ')
+        i = 0
+        # append every word to a line while its width is shorter than the image width
+        while i < len(words):
+            line = ''
+            while i < len(words) and font.getsize(line + words[i])[0] <= max_width:
+                line = line + words[i]+ " "
+                i += 1
+            if not line:
+                line = words[i]
+                i += 1
+            lines.append(line)
+    return lines
+
+imageWidth = int(4350 / 4)
+imageHeight = int(2705 / 4)
 
 # infile = 'Grad-WashU.jpg'
 
 im = Image.new("RGB", (imageWidth,imageHeight), color=(227, 7, 14))
 
-barMargin = 20
-barWeight = 15
+barMargin = 35
+barWeight = 25
 barHorizontalLength = imageWidth * 0.4
 barVerticalLength = imageHeight * 0.35
 
@@ -21,7 +45,23 @@ draw.rectangle([barMargin, barMargin, barMargin + barWeight, barVerticalLength],
 draw.rectangle([imageWidth - barMargin - barHorizontalLength, imageHeight - barMargin - barWeight, imageWidth - barMargin, imageHeight - barMargin], fill=(255,255,255))
 draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=(255,255,255))
 
-font = ImageFont.truetype("fonts/Georgia.ttf", size=80)
-draw.multiline_text((2* barMargin, 2* barMargin), "This is a test. Hi Emma.",font=font)
+font = ImageFont.truetype("fonts/Georgia.ttf", size=70)
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
+
+lines = text_wrap(text, font, (imageWidth - 6 * barMargin))
+
+line_height = font.getsize('hg')[1]
+
+x = 3 * barMargin
+y = 2.5 * barMargin
+
+for line in lines:
+    draw.text((x,y), line, fill=(255,255,255), font=font)
+    
+    y = y + line_height
+
+# textBoxMaxSize = (3 * barMargin, 2.5 * barMargin, imageWidth - (3 * barMargin), imageHeight * 0.75)
+# draw.rectangle([textBoxMaxSize[0], textBoxMaxSize[1], textBoxMaxSize[2], textBoxMaxSize[3]], fill=(255,255,255))
+# draw.multiline_text((3 * barMargin, 2.5 * barMargin), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", font=font, fill=(255,255,255))
 
 im.save("output/test.png", "PNG")
