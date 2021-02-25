@@ -28,47 +28,51 @@ def text_wrap(text, font, max_width):
 imageWidth = int(4350 / 4)
 imageHeight = int(2705 / 4)
 
-# infile = 'Grad-WashU.jpg'
-
 im = Image.new("RGB", (imageWidth,imageHeight), color=(227, 7, 14))
+draw = ImageDraw.Draw(im)
 
+# define bars
 barMargin = 35
 barWeight = 25
 barHorizontalLength = imageWidth * 0.4
 barVerticalLength = imageHeight * 0.35
+barColor = (255,255,255)
 
-draw = ImageDraw.Draw(im)
+# draw upper bars
+draw.rectangle([barMargin, barMargin, barHorizontalLength, barMargin + barWeight], fill=barColor)
+draw.rectangle([barMargin, barMargin, barMargin + barWeight, barVerticalLength], fill=barColor)
+# draw lower bars
+draw.rectangle([imageWidth - barMargin - barHorizontalLength, imageHeight - barMargin - barWeight, imageWidth - barMargin, imageHeight - barMargin], fill=barColor)
+draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=barColor)
 
-draw.rectangle([barMargin, barMargin, barHorizontalLength, barMargin + barWeight], fill=(255,255,255))
-draw.rectangle([barMargin, barMargin, barMargin + barWeight, barVerticalLength], fill=(255,255,255))
-
-draw.rectangle([imageWidth - barMargin - barHorizontalLength, imageHeight - barMargin - barWeight, imageWidth - barMargin, imageHeight - barMargin], fill=(255,255,255))
-draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=(255,255,255))
-
-font = ImageFont.truetype("fonts/Georgia.ttf", size=72)
+# import font
+quote_font = ImageFont.truetype("fonts/Georgia.ttf", size=72)
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
 
-quote_lines = text_wrap(text, font, (imageWidth - 6 * barMargin))
+# get lines to wrap text
+quote_lines = text_wrap(text, quote_font, (imageWidth - 6 * barMargin))
 
-line_height = font.getsize('hg')[1]
+line_height = quote_font.getsize('hg')[1]
 
-x = 3 * barMargin
-y = 2.5 * barMargin
+# quote positioning
+quote_x = 2 * barMargin + barWeight
+quote_y = 1.75 * barMargin + barWeight
 
+# print quote lines
 for line in quote_lines:
-    draw.text((x,y), line, fill=(255,255,255), font=font)
-    
-    y = y + line_height
+    draw.text((quote_x,quote_y), line, fill=(255,255,255), font=quote_font)
+    quote_y = quote_y + line_height
 
+# set citation font
+citation_font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
 
-font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
+quote_citation = "Emma Baker, Editor-in-Chief"
+quote_citation = "-" + quote_citation
+quote_citation_size = citation_font.getsize(quote_citation)
+quote_citation_position = ((imageWidth - (3 * barMargin) - quote_citation_size[0]), 
+                            (imageHeight - (2.5 * barMargin) - quote_citation_size[1]))
 
-quote_author = "Emma Baker, Editor-in-Chief"
-quote_author = "-" + quote_author
-
-quote_author_size = font.getsize(quote_author)
-
-draw.text(((imageWidth - (3 * barMargin) - quote_author_size[0]), (imageHeight - (2.5 * barMargin) - quote_author_size[1])), quote_author, font=font)
+draw.text((quote_citation_position[0],quote_citation_position[1]), quote_citation, font=citation_font)
 
 # textBoxMaxSize = (3 * barMargin, 2.5 * barMargin, imageWidth - (3 * barMargin), imageHeight * 0.75)
 # draw.rectangle([textBoxMaxSize[0], textBoxMaxSize[1], textBoxMaxSize[2], textBoxMaxSize[3]], fill=(255,255,255))
