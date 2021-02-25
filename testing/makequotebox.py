@@ -64,10 +64,22 @@ for line in quote_lines:
     quote_y = quote_y + line_height
 
 # set citation font
-citation_font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
+test_font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
+test_text = "Lorem ipsum dolor sit amet"
+num_chars = len(test_text)
+target_size = imageWidth * 0.6
+current_width = test_font.getsize(test_text)[0]
+new_font_size = (target_size / current_width) * 50
+
+print(new_font_size)
+test_font = ImageFont.truetype("fonts/Georgia.ttf", size=int(new_font_size))
+draw.text((50,300), test_text, font=test_font)
 
 quote_citation = "Emma Baker, Editor-in-Chief"
 quote_citation = "-" + quote_citation
+
+citation_font = ImageFont.truetype("fonts/Georgia.ttf", size=10)
+
 quote_citation_size = citation_font.getsize(quote_citation)
 quote_citation_position = ((imageWidth - (3 * barMargin) - quote_citation_size[0]), 
                             (imageHeight - (2.5 * barMargin) - quote_citation_size[1]))
