@@ -45,20 +45,30 @@ draw.rectangle([barMargin, barMargin, barMargin + barWeight, barVerticalLength],
 draw.rectangle([imageWidth - barMargin - barHorizontalLength, imageHeight - barMargin - barWeight, imageWidth - barMargin, imageHeight - barMargin], fill=(255,255,255))
 draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=(255,255,255))
 
-font = ImageFont.truetype("fonts/Georgia.ttf", size=70)
+font = ImageFont.truetype("fonts/Georgia.ttf", size=72)
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
 
-lines = text_wrap(text, font, (imageWidth - 6 * barMargin))
+quote_lines = text_wrap(text, font, (imageWidth - 6 * barMargin))
 
 line_height = font.getsize('hg')[1]
 
 x = 3 * barMargin
 y = 2.5 * barMargin
 
-for line in lines:
+for line in quote_lines:
     draw.text((x,y), line, fill=(255,255,255), font=font)
     
     y = y + line_height
+
+
+font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
+
+quote_author = "Emma Baker, Editor-in-Chief"
+quote_author = "-" + quote_author
+
+quote_author_size = font.getsize(quote_author)
+
+draw.text(((imageWidth - (3 * barMargin) - quote_author_size[0]), (imageHeight - (2.5 * barMargin) - quote_author_size[1])), quote_author, font=font)
 
 # textBoxMaxSize = (3 * barMargin, 2.5 * barMargin, imageWidth - (3 * barMargin), imageHeight * 0.75)
 # draw.rectangle([textBoxMaxSize[0], textBoxMaxSize[1], textBoxMaxSize[2], textBoxMaxSize[3]], fill=(255,255,255))
