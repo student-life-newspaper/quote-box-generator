@@ -63,37 +63,20 @@ for line in quote_lines:
     draw.text((quote_x,quote_y), line, fill=(255,255,255), font=quote_font)
     quote_y = quote_y + line_height
 
-# set citation font
-# test_font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
-# test_text = "Lorem ipsum dolor sit amet"
-# # num_chars = len(test_text)
-# target_size = imageWidth * 0.6
-# current_width = test_font.getsize(test_text)[0]
-# new_font_size = (target_size / current_width) * 50
-
-# print(new_font_size)
-# test_font = ImageFont.truetype("fonts/Georgia.ttf", size=int(new_font_size))
-# draw.text((50,300), test_text, font=test_font)
-
+# set citation
 quote_citation = "Emma Baker, Editor-in-Chief"
 quote_citation = "-" + quote_citation
-citation_font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
 
+# calculate citation width
+citation_font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
 target_size = imageWidth * 0.6
 current_citation_width = citation_font.getsize(quote_citation)[0]
 new_citation_font_size = (target_size / current_citation_width) * 50
-
-print(new_citation_font_size)
 citation_font = ImageFont.truetype("fonts/Georgia.ttf", size=int(new_citation_font_size))
-
 quote_citation_size = citation_font.getsize(quote_citation)
 quote_citation_position = ((imageWidth - (3 * barMargin) - quote_citation_size[0]), 
                             (imageHeight - (2.5 * barMargin) - quote_citation_size[1]))
 
 draw.text((quote_citation_position[0],quote_citation_position[1]), quote_citation, font=citation_font)
-
-# textBoxMaxSize = (3 * barMargin, 2.5 * barMargin, imageWidth - (3 * barMargin), imageHeight * 0.75)
-# draw.rectangle([textBoxMaxSize[0], textBoxMaxSize[1], textBoxMaxSize[2], textBoxMaxSize[3]], fill=(255,255,255))
-# draw.multiline_text((3 * barMargin, 2.5 * barMargin), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", font=font, fill=(255,255,255))
 
 im.save("output/test.png", "PNG")
