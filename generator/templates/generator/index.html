@@ -10,3 +10,9 @@
 {% else %}
     <p>{{ quoteBox.quote_text }}</p>
 {% endif %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" href="/">Submit</button>
+  </form>
