@@ -7,7 +7,7 @@ def index(request):
     message = "studlife is cool"
     try:
         quoteBox = QuoteBox.objects.get(pk=request.GET['id'])
-    except QuoteBox.DoesNotExist:
+    except:
         quoteBox = None
     context = {
         'message': message,
