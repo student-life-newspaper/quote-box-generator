@@ -1,14 +1,7 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
-
-# from .models import QuoteBox
-import os, sys
 from PIL import Image, ImageDraw, ImageFont
-
+from django.http import HttpResponse
+from django.shortcuts import render
 from .forms import QuoteBoxForm
-
-# import StringIO
-# from django.core.files.base import ContentFile
 
 # text_wrap adapted from https://github.com/Eyongkevin/How-to-Wrap-Text-on-Image-using-Python/
 def text_wrap(text, font, max_width):
@@ -94,23 +87,17 @@ def generate_quote_box(request):
     return response
 
 def index(request):
-    message = "studlife is cool"
     if request.method == "POST":
         quoteBox = None
         form = QuoteBoxForm(request.POST)
         if form.is_valid():
             print(form.cleaned_data['quote_text'])
-            # quoteBox = make_quote_box()
     else:
         quoteBox = None
         form = QuoteBoxForm()
 
     context = {
-        'message': message,
-        'quoteBox' : quoteBox,
-        # 'error' : error,
         'form' : form
     }
 
-    # make_quote_box()
     return render(request, 'generator/index.html', context)

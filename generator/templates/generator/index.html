@@ -1,20 +1,7 @@
-{% if message %}
-    <ul>
-     {{ message }}
-    </ul>
-{% else %}
-    <p>No message available.</p>
-{% endif %}
-{% if quoteBox == None %}
-    <p>An error occured, or no quote box exists with that id</p>
-{% else %}
-    <p>{{ quoteBox.quote_text }}</p>
-{% endif %}
-
 <img src="{% url 'generator:generate_quote_box' %}" alt="no &lt;3">
 
 <form action="" method="POST">
     {% csrf_token %}
     {{ form }}
     <button type="submit" href="/">Submit</button>
-  </form>
+</form>
