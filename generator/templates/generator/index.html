@@ -11,6 +11,8 @@
     <p>{{ quoteBox.quote_text }}</p>
 {% endif %}
 
+<img src="{% url 'generator:generate_quote_box' %}" alt="no &lt;3">
+
 <form action="" method="POST">
     {% csrf_token %}
     {{ form }}
