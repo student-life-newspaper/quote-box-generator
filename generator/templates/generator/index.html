@@ -4,20 +4,8 @@
 </div>
 {% endif %}
 
-<!-- <form action="{% url 'generator:generate_quote_box' %}" id="form-qb" method="GET"> -->
 <form action="" id="form-qb" method="POST">
     {% csrf_token %}
     {{ form }}
     <input id="submit-qb" type="submit" value="Submit" />
 </form>
-
-<script>
-
-    // window.onload = function() {
-    //     document.getElementById("submit-qb").addEventListener("click", function(event){
-    //         event.preventDefault()
-    //         document.getElementById("form-qb")
-    //     })
-    // }
-
-</script>
