@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.utils.http import urlencode
 from .forms import QuoteBoxForm
 
 # text_wrap adapted from https://github.com/Eyongkevin/How-to-Wrap-Text-on-Image-using-Python/
@@ -28,6 +29,10 @@ def text_wrap(text, font, max_width):
     return lines
 
 def generate_quote_box(request):
+    if request.method == "GET":
+        form = QuoteBoxForm(request.GET)
+        if form.is_valid():
+            print(form.cleaned_data['quote_text'])
     imageWidth = int(4350 / 4)
     imageHeight = int(2705 / 4)
 
@@ -88,16 +93,22 @@ def generate_quote_box(request):
 
 def index(request):
     if request.method == "POST":
-        quoteBox = None
+        print("here")
         form = QuoteBoxForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data['quote_text'])
+            print(form.cleaned_data)
+            qb_url = "generate_quote_box?"
+            qb_url = qb_url + urlencode(form.cleaned_data)
+            print(qb_url)
+        else:
+            qb_url = None
     else:
-        quoteBox = None
+        qb_url = None
         form = QuoteBoxForm()
 
     context = {
-        'form' : form
+        'form' : form,
+        'qb_url': qb_url
     }
 
     return render(request, 'generator/index.html', context)
