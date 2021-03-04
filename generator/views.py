@@ -58,7 +58,7 @@ def generate_quote_box(request):
             draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=barColor)
 
             # import font
-            quote_font = ImageFont.truetype("./fonts/Georgia.ttf", size=72)
+            quote_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=72)
             text = qb['quote_text']
 
             # get lines to wrap text
@@ -79,11 +79,11 @@ def generate_quote_box(request):
             quote_citation = "-" + qb['quote_citation']
 
             # calculate citation width
-            citation_font = ImageFont.truetype("fonts/Georgia.ttf", size=50)
+            citation_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=50)
             target_size = imageWidth * 0.6
             current_citation_width = citation_font.getsize(quote_citation)[0]
             new_citation_font_size = (target_size / current_citation_width) * 50
-            citation_font = ImageFont.truetype("fonts/Georgia.ttf", size=int(new_citation_font_size))
+            citation_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=int(new_citation_font_size))
             quote_citation_size = citation_font.getsize(quote_citation)
             quote_citation_position = ((imageWidth - (3 * barMargin) - quote_citation_size[0]), 
                                         (imageHeight - (2.5 * barMargin) - quote_citation_size[1]))
@@ -92,7 +92,7 @@ def generate_quote_box(request):
         else:
             im = Image.new("RGB", (600,200), color=(227, 7, 14))
             draw = ImageDraw.Draw(im)
-            quote_font = ImageFont.truetype("./fonts/Georgia.ttf", size=40)
+            quote_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=40)
             draw.text((50,50), 'An error has occured', fill=(255,255,255), font=quote_font)
 
     response = HttpResponse(content_type="image/png")
