@@ -1,0 +1,25 @@
+.site-wrapper {
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#qb-wrapper img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#id_quote_text {
+    width: 50%;
+    height: 50px;
+}
+
+#form-qb input, #form-qb textarea {
+    display: block;
+    margin: 5px 0 15px 0;
+}
+
+#form-qb textarea {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

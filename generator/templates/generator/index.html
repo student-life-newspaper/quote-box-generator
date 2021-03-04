@@ -1,11 +1,17 @@
-{% if qb_url %}
-<div id="qb-wrapper">
-    <img src="{{ qb_url }}" alt="Quote Box">
-</div>
-{% endif %}
+{% load static %}
 
-<form action="" id="form-qb" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input id="submit-qb" type="submit" value="Submit" />
-</form>
+<link rel="stylesheet" type="text/css" href="{% static 'generator/style.css' %}">
+
+<div class="site-wrapper">
+    {% if qb_url %}
+    <div id="qb-wrapper">
+        <img src="{{ qb_url }}" alt="Quote Box">
+    </div>
+    {% endif %}
+
+    <form action="" id="form-qb" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input id="submit-qb" type="submit" value="Submit" />
+    </form>
+</div>
