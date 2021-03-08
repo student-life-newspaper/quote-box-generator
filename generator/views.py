@@ -34,7 +34,11 @@ def generate_quote_box(request):
         if form.is_valid():
             qb = form.cleaned_data
 
-            background_color = ImageColor.getrgb('#' + qb['background_color'])
+            if qb['background_color'] == 'Custom':
+                form_background_color = qb['background_color_custom']
+            else:
+                form_background_color = qb['background_color']
+            background_color = ImageColor.getrgb('#' + form_background_color)
             text_color = ImageColor.getrgb('#' + qb['text_color'])
 
             imageWidth = qb['width']
