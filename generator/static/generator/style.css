@@ -23,3 +23,11 @@
 #form-qb textarea {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+#form-qb ul li {
+    list-style-type: none;
+}
+
+#form-qb ul input {
+    display: inline;
+}
