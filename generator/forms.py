@@ -2,6 +2,7 @@ import re
 
 from django import forms
 
+# adapted from https://gist.github.com/ostcar/9589152
 class HexFormField(forms.CharField):
     default_error_messages = {
         'invalid': 'Enter a valid hexfigure: e.g. "ff0022"',
