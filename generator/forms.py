@@ -1,6 +1,7 @@
 import re
 
 from django import forms
+from django.core.exceptions import ValidationError
 
 # adapted from https://gist.github.com/ostcar/9589152
 class HexFormField(forms.CharField):
@@ -19,7 +20,7 @@ BACKGROUND_COLOR_CHOICES = [
     ('696969','Grey'),
     ('007d2c','Green'),
     ('0e1e5c','Blue'),
-    ('b1170f','Custom'),
+    ('Custom','Custom'),
 ]
 
 class QuoteBoxForm(forms.Form):
@@ -30,3 +31,14 @@ class QuoteBoxForm(forms.Form):
     text_color = HexFormField(label='Text color (6 character hex value)', initial="ffffff", max_length=6)
     width = forms.IntegerField(label="Width (px)", initial=1116)
     height = forms.IntegerField(label="Height (px)", initial=706)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        background_color = cleaned_data.get("background_color")
+        background_color_custom = cleaned_data.get("background_color_custom")
+
+        if background_color == "Custom" and not background_color_custom:
+            raise ValidationError(
+                "Please enter a valid background color"
+            )
+            
