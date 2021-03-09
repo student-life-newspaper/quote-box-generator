@@ -32,10 +32,10 @@ class QuoteBoxForm(forms.Form):
     quote_text = forms.CharField(label='Quote text', max_length=500, widget=forms.Textarea)
     quote_citation = forms.CharField(label='Quote citation', max_length=200)
     background_color = forms.ChoiceField(label="Background color", widget=forms.RadioSelect, initial=BACKGROUND_COLOR_CHOICES[0][0], choices=BACKGROUND_COLOR_CHOICES)
-    background_color_custom = HexFormField(label='Custom background color (6 character hex value)', initial="", max_length=6, required=False)
+    background_color_custom = HexFormField(label='Custom background color (6 character hex value)', initial="", max_length=6, required=False, widget=forms.TextInput(attrs={'class' : 'custom_input'}))
     text_color = HexFormField(label='Text color (6 character hex value)', initial="ffffff", max_length=6)
     quote_font_size = forms.ChoiceField(label="Quote font size (pts)", widget=forms.RadioSelect, initial=QUOTE_FONT_SIZE_CHOICES[0][0], choices=QUOTE_FONT_SIZE_CHOICES)
-    quote_font_size_custom = forms.IntegerField(label="Custom quote font size (px)", initial=0, required=False)
+    quote_font_size_custom = forms.IntegerField(label="Custom quote font size (pts)", initial=0, widget=forms.TextInput(attrs={'class' : 'custom_input'}), required=False)
     width = forms.IntegerField(label="Width (px)", initial=950)
     height = forms.IntegerField(label="Height (px)", initial=600)
 
@@ -55,3 +55,4 @@ class QuoteBoxForm(forms.Form):
             raise ValidationError(
                 'Please enter a custom quote font size'
             )
+    
