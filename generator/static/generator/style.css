@@ -20,6 +20,11 @@
     margin: 5px 0 15px 0;
 }
 
+form > label[for=id_background_color_0], form > label[for=id_text_color], form > label[for=id_quote_font_size_0], form > label[for=id_width] {
+    margin-top: 40px;
+    display: block;
+}
+
 #form-qb textarea {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

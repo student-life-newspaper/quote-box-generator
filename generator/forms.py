@@ -51,8 +51,13 @@ class QuoteBoxForm(forms.Form):
 
         quote_font_size = cleaned_data.get("quote_font_size")
         quote_font_size_custom = cleaned_data.get("quote_font_size_custom")
-        if quote_font_size == 'Custom' and not quote_font_size_custom:
-            raise ValidationError(
-                'Please enter a custom quote font size'
-            )
+        if quote_font_size == 'Custom':
+            if not quote_font_size_custom:
+                raise ValidationError(
+                    'Please enter a custom quote font size'
+                )
+            elif quote_font_size_custom < 1 or quote_font_size_custom > 500:
+                raise ValidationError(
+                    'Font size must be greater than 0 and less than 500'
+                )
     
