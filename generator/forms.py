@@ -23,12 +23,19 @@ BACKGROUND_COLOR_CHOICES = [
     ('Custom','Custom'),
 ]
 
+QUOTE_FONT_SIZE_CHOICES = [
+    ('Auto','Auto'),
+    ('Custom','Custom'),
+]
+
 class QuoteBoxForm(forms.Form):
     quote_text = forms.CharField(label='Quote text', max_length=500, widget=forms.Textarea)
     quote_citation = forms.CharField(label='Quote citation', max_length=200)
     background_color = forms.ChoiceField(label="Background color", widget=forms.RadioSelect, initial=BACKGROUND_COLOR_CHOICES[0][0], choices=BACKGROUND_COLOR_CHOICES)
-    background_color_custom = HexFormField(label='Custom background color (6 character hex value)', initial="", max_length=6, required=False)
+    background_color_custom = HexFormField(label='Custom background color (6 character hex value)', initial="", max_length=6, required=False, widget=forms.TextInput(attrs={'class' : 'custom_input'}))
     text_color = HexFormField(label='Text color (6 character hex value)', initial="ffffff", max_length=6)
+    quote_font_size = forms.ChoiceField(label="Quote font size (pts)", widget=forms.RadioSelect, initial=QUOTE_FONT_SIZE_CHOICES[0][0], choices=QUOTE_FONT_SIZE_CHOICES)
+    quote_font_size_custom = forms.IntegerField(label="Custom quote font size (pts)", initial=0, widget=forms.TextInput(attrs={'class' : 'custom_input'}), required=False)
     width = forms.IntegerField(label="Width (px)", initial=950)
     height = forms.IntegerField(label="Height (px)", initial=600)
 
@@ -40,4 +47,27 @@ class QuoteBoxForm(forms.Form):
         if background_color == "Custom" and not background_color_custom:
             raise ValidationError(
                 "Please enter a valid background color"
+            )
+
+        quote_font_size = cleaned_data.get("quote_font_size")
+        quote_font_size_custom = cleaned_data.get("quote_font_size_custom")
+        if quote_font_size == 'Custom':
+            if not quote_font_size_custom:
+                raise ValidationError(
+                    'Please enter a custom quote font size'
+                )
+            elif quote_font_size_custom < 1 or quote_font_size_custom > 500:
+                raise ValidationError(
+                    'Font size must be greater than 0 and less than 500'
+                )
+        
+        width = cleaned_data.get('width')
+        height = cleaned_data.get('height')
+        if width < 10 or width > 5000:
+            raise ValidationError(
+                'Width out of bounds'
+            )
+        if height < 10 or height > 5000:
+            raise ValidationError(
+                'Height out of bounds'
             )

@@ -28,6 +28,14 @@ def text_wrap(text, font, max_width):
             lines.append(line)
     return lines
 
+def find_quote_font_size(text, max_width, max_height):
+    font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=50)
+    line_height_50 = font.getsize('hg')[1]
+    target_line_height = (int)(max_height / 6)
+    font_size_0 = (int)(target_line_height * 50 / line_height_50)
+    font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=font_size_0)
+    return ( text_wrap(text, font, max_width), font, font_size_0, font.getsize('hg')[1])
+
 def generate_quote_box(request):
     if request.method == "GET":
         form = QuoteBoxForm(request.GET)
@@ -61,14 +69,16 @@ def generate_quote_box(request):
             draw.rectangle([imageWidth - barMargin - barHorizontalLength, imageHeight - barMargin - barWeight, imageWidth - barMargin, imageHeight - barMargin], fill=barColor)
             draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=barColor)
 
-            # import font
-            quote_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=57)
+            
             text = qb['quote_text']
-
             # get lines to wrap text
-            quote_lines = text_wrap(text, quote_font, (imageWidth - 6 * barMargin))
-
-            line_height = quote_font.getsize('hg')[1]
+            if(qb['quote_font_size'] == 'Auto'):
+                quote_lines, quote_font, quote_font_size, line_height = find_quote_font_size(text, (imageWidth - 6 * barMargin), (imageHeight * 0.6))
+            else:
+                quote_font_size = qb['quote_font_size_custom']
+                quote_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=quote_font_size)
+                quote_lines = text_wrap(text, quote_font, (imageWidth - 6 * barMargin))
+                line_height = quote_font.getsize('hg')[1]
 
             # quote positioning
             quote_x = 2 * barMargin + barWeight
@@ -108,6 +118,9 @@ def index(request):
         form = QuoteBoxForm(request.POST)
         if form.is_valid():
             qb_url = "generate_quote_box?"
+            # can't url encode None
+            if(form.cleaned_data['quote_font_size_custom'] == None):
+                form.cleaned_data['quote_font_size_custom'] = 0
             qb_url = qb_url + urlencode(form.cleaned_data)
         else:
             qb_url = None

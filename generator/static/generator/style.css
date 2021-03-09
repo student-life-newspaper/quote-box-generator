@@ -20,12 +20,23 @@
     margin: 5px 0 15px 0;
 }
 
+form > label[for=id_background_color_0], form > label[for=id_text_color], form > label[for=id_quote_font_size_0], form > label[for=id_width] {
+    margin-top: 40px;
+    display: block;
+}
+
 #form-qb textarea {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#form-qb ul li {
+#id_background_color li, #id_quote_font_size li {
+    padding: 0px 10px;
     list-style-type: none;
+    display: inline-block;
+}
+
+.custom_input, label[for=id_background_color_custom], label[for=id_quote_font_size_custom] {
+    margin-left: 40px !important;
 }
 
 #form-qb ul input {
