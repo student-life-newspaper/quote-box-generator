@@ -60,4 +60,14 @@ class QuoteBoxForm(forms.Form):
                 raise ValidationError(
                     'Font size must be greater than 0 and less than 500'
                 )
-    
+        
+        width = cleaned_data.get('width')
+        height = cleaned_data.get('height')
+        if width < 10 or width > 5000:
+            raise ValidationError(
+                'Width out of bounds'
+            )
+        if height < 10 or height > 5000:
+            raise ValidationError(
+                'Height out of bounds'
+            )
