@@ -80,7 +80,7 @@ def generate_quote_box(request):
                 quote_y = quote_y + line_height
 
             # set citation
-            quote_citation = "-" + qb['quote_citation']
+            quote_citation = "— " + qb['quote_citation']
 
             # calculate citation width
             citation_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=50)
