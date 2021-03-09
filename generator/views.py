@@ -28,6 +28,18 @@ def text_wrap(text, font, max_width):
             lines.append(line)
     return lines
 
+def find_quote_font_size(text, max_width, max_height):
+    font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=50)
+    line_height_50 = font.getsize('hg')[1]
+    target_line_height = (int)(max_height / 6)
+    font_size_0 = (int)(target_line_height * 50 / line_height_50)
+    font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=font_size_0)
+    print(line_height_50)
+    print(target_line_height)
+    print(font_size_0)
+    print(font.getsize('hg')[1])
+    return ( text_wrap(text, font, max_width), font, font.getsize('hg')[1])
+
 def generate_quote_box(request):
     if request.method == "GET":
         form = QuoteBoxForm(request.GET)
@@ -61,14 +73,12 @@ def generate_quote_box(request):
             draw.rectangle([imageWidth - barMargin - barHorizontalLength, imageHeight - barMargin - barWeight, imageWidth - barMargin, imageHeight - barMargin], fill=barColor)
             draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=barColor)
 
-            # import font
-            quote_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=57)
+            
             text = qb['quote_text']
-
             # get lines to wrap text
-            quote_lines = text_wrap(text, quote_font, (imageWidth - 6 * barMargin))
+            quote_lines, quote_font, line_height = find_quote_font_size(text, (imageWidth - 6 * barMargin), (imageHeight * 0.6))
 
-            line_height = quote_font.getsize('hg')[1]
+            # line_height = quote_font.getsize('hg')[1]
 
             # quote positioning
             quote_x = 2 * barMargin + barWeight
