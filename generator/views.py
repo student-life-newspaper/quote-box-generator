@@ -48,8 +48,8 @@ def generate_quote_box(request):
             draw = ImageDraw.Draw(im)
 
             # define bars
-            barMargin = 35
-            barWeight = 25
+            barMargin = (int)(imageWidth / 27)
+            barWeight = (int)(imageWidth / 43)
             barHorizontalLength = imageWidth * 0.4
             barVerticalLength = imageHeight * 0.35
             barColor = text_color
@@ -62,7 +62,7 @@ def generate_quote_box(request):
             draw.rectangle([imageWidth - barMargin, imageHeight - barMargin, imageWidth - barMargin - barWeight, imageHeight - barWeight - barVerticalLength], fill=barColor)
 
             # import font
-            quote_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=72)
+            quote_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=57)
             text = qb['quote_text']
 
             # get lines to wrap text
