@@ -47,7 +47,11 @@ def generate_quote_box(request):
             else:
                 form_background_color = qb['background_color']
             background_color = ImageColor.getrgb('#' + form_background_color)
-            text_color = ImageColor.getrgb('#' + qb['text_color'])
+
+            if qb['text_color'] == 'Custom':
+                text_color = ImageColor.getrgb('#' + qb['text_color_custom'])
+            else:
+                text_color = ImageColor.getrgb('#' + qb['text_color'])
 
             imageWidth = qb['width']
             imageHeight = qb['height']
@@ -102,7 +106,7 @@ def generate_quote_box(request):
             quote_citation_position = ((imageWidth - (3 * barMargin) - quote_citation_size[0]), 
                                         (imageHeight - (2.5 * barMargin) - quote_citation_size[1]))
 
-            draw.text((quote_citation_position[0],quote_citation_position[1]), quote_citation, font=citation_font)
+            draw.text((quote_citation_position[0],quote_citation_position[1]), quote_citation, fill=text_color, font=citation_font)
         else:
             im = Image.new("RGB", (600,200), color=(227, 7, 14))
             draw = ImageDraw.Draw(im)
