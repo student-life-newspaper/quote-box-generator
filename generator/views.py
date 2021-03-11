@@ -97,11 +97,14 @@ def generate_quote_box(request):
             quote_citation = "— " + qb['quote_citation']
 
             # calculate citation width
-            citation_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=50)
-            target_size = imageWidth * 0.6
-            current_citation_width = citation_font.getsize(quote_citation)[0]
-            new_citation_font_size = (target_size / current_citation_width) * 50
-            citation_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=int(new_citation_font_size))
+            if(qb['citation_font_size'] == 'Auto'):
+                citation_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=50)
+                target_size = imageWidth * 0.6
+                current_citation_width = citation_font.getsize(quote_citation)[0]
+                new_citation_font_size = (target_size / current_citation_width) * 50
+                citation_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=int(new_citation_font_size))
+            else:
+                citation_font = ImageFont.truetype("/app/fonts/Georgia.ttf", size=quote_font_size)
             quote_citation_size = citation_font.getsize(quote_citation)
             quote_citation_position = ((imageWidth - (3 * barMargin) - quote_citation_size[0]), 
                                         (imageHeight - (2.5 * barMargin) - quote_citation_size[1]))

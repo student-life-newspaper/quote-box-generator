@@ -33,6 +33,11 @@ TEXT_COLOR_CHOICES = [
     ('Custom','Custom')
 ]
 
+CITATION_FONT_SIZE_CHOICES = [
+    ('Same','Same as quote text'),
+    ('Auto','Auto')
+]
+
 class QuoteBoxForm(forms.Form):
     quote_text = forms.CharField(label='Quote text', max_length=500, widget=forms.Textarea)
     quote_citation = forms.CharField(label='Quote citation', max_length=200)
@@ -42,6 +47,7 @@ class QuoteBoxForm(forms.Form):
     text_color_custom = HexFormField(label='Custom text color (6 character hex value)', max_length=6, required=False, widget=forms.TextInput(attrs={'class' : 'custom_input'}))
     quote_font_size = forms.ChoiceField(label="Quote font size (pts)", widget=forms.RadioSelect, initial=QUOTE_FONT_SIZE_CHOICES[0][0], choices=QUOTE_FONT_SIZE_CHOICES)
     quote_font_size_custom = forms.IntegerField(label="Custom quote font size (pts)", initial=0, widget=forms.TextInput(attrs={'class' : 'custom_input'}), required=False)
+    citation_font_size = forms.ChoiceField(label='Citation font size', widget=forms.RadioSelect, initial=CITATION_FONT_SIZE_CHOICES[0][0], choices=CITATION_FONT_SIZE_CHOICES)
     width = forms.IntegerField(label="Width (px)", initial=950)
     height = forms.IntegerField(label="Height (px)", initial=600)
 
