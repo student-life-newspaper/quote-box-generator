@@ -28,14 +28,26 @@ QUOTE_FONT_SIZE_CHOICES = [
     ('Custom','Custom'),
 ]
 
+TEXT_COLOR_CHOICES = [
+    ('ffffff', 'White'),
+    ('Custom','Custom')
+]
+
+CITATION_FONT_SIZE_CHOICES = [
+    ('Same','Same as quote text'),
+    ('Auto','Auto')
+]
+
 class QuoteBoxForm(forms.Form):
     quote_text = forms.CharField(label='Quote text', max_length=500, widget=forms.Textarea)
     quote_citation = forms.CharField(label='Quote citation', max_length=200)
     background_color = forms.ChoiceField(label="Background color", widget=forms.RadioSelect, initial=BACKGROUND_COLOR_CHOICES[0][0], choices=BACKGROUND_COLOR_CHOICES)
     background_color_custom = HexFormField(label='Custom background color (6 character hex value)', initial="", max_length=6, required=False, widget=forms.TextInput(attrs={'class' : 'custom_input'}))
-    text_color = HexFormField(label='Text color (6 character hex value)', initial="ffffff", max_length=6)
+    text_color = forms.ChoiceField(label='Text color', widget=forms.RadioSelect, initial=TEXT_COLOR_CHOICES[0][0],choices=TEXT_COLOR_CHOICES)
+    text_color_custom = HexFormField(label='Custom text color (6 character hex value)', max_length=6, required=False, widget=forms.TextInput(attrs={'class' : 'custom_input'}))
     quote_font_size = forms.ChoiceField(label="Quote font size (pts)", widget=forms.RadioSelect, initial=QUOTE_FONT_SIZE_CHOICES[0][0], choices=QUOTE_FONT_SIZE_CHOICES)
     quote_font_size_custom = forms.IntegerField(label="Custom quote font size (pts)", initial=0, widget=forms.TextInput(attrs={'class' : 'custom_input'}), required=False)
+    citation_font_size = forms.ChoiceField(label='Citation font size', widget=forms.RadioSelect, initial=CITATION_FONT_SIZE_CHOICES[0][0], choices=CITATION_FONT_SIZE_CHOICES)
     width = forms.IntegerField(label="Width (px)", initial=950)
     height = forms.IntegerField(label="Height (px)", initial=600)
 
@@ -60,6 +72,11 @@ class QuoteBoxForm(forms.Form):
                 raise ValidationError(
                     'Font size must be greater than 0 and less than 500'
                 )
+        
+        if cleaned_data.get('text_color') == 'Custom' and not cleaned_data.get('text_color_custom'):
+            raise ValidationError(
+                    'Please enter a custom text color'
+            )
         
         width = cleaned_data.get('width')
         height = cleaned_data.get('height')
