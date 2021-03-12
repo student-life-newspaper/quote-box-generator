@@ -34,8 +34,8 @@ TEXT_COLOR_CHOICES = [
 ]
 
 CITATION_FONT_SIZE_CHOICES = [
+    ('Auto','Auto'),
     ('Same','Same as quote text'),
-    ('Auto','Auto')
 ]
 
 class QuoteBoxForm(forms.Form):
